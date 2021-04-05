@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./index.js"></script>
+    <style>
+        .cover {
+            width: 800px;
+        }
+
+        .cover img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cover">
+        <p id="tips">获取中</p>
+        <img id="img">
+
+        <button id="downloadBtn">下载</button>
+        <button id="next">下一张</button>
+        <button id="appoint">指定</button>
+    </div>
+</body>
+<script>
+    const next = document.getElementById('next')
+    let imageInfo = ''
+
+    const cover = new VideoCover({
+        url: 'https://res.klook.com/video/upload/v1558002261/Homepage/EN4_m.mov',
+        // currentTime: 0,
+        imgWidth: 800,
+        quality: 0.9,
+        imageType: 'image/jpeg',
+        isCheckImageColor: true, // 是否检查图片为纯色
+    })
+
+    // 生成截图
+    cover.getVideoCover((res) => {
+        const img = document.getElementById('img')
+        const tips = document.getElementById('tips')
+
+        img.setAttribute('src', res)
+        imageInfo = res
+        tips.innerText = '获取成功'
+    })
+
+    // 获取下一秒视频截图
+    next.addEventListener('click', function () {
+        cover.nextTime()
+    })
+
+    // 获取下一秒视频截图
+    document.getElementById('appoint').addEventListener('click', function () {
+        cover.jumpTime(20)
+    })
+
+    // 下载图片
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+        if (imageInfo) {
+            VideoCover.downloadFile(imageInfo)
+        }
+    })
+</script>
+
+</html>
