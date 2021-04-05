@@ -9,7 +9,7 @@
     <script src="./index.js"></script>
     <style>
         .cover {
-            width: 800px;
+            width: 600px;
         }
 
         .cover img {
@@ -23,9 +23,10 @@
         <p id="tips">获取中</p>
         <img id="img">
 
+        <button id="start">开始</button>
         <button id="downloadBtn">下载</button>
         <button id="next">下一张</button>
-        <button id="appoint">指定</button>
+        <button id="appoint">指定时间</button>
     </div>
 </body>
 <script>
@@ -33,22 +34,24 @@
     let imageInfo = ''
 
     const cover = new VideoCover({
-        url: 'https://res.klook.com/video/upload/v1558002261/Homepage/EN4_m.mov',
+        url: 'https://cdn.huodao.hk/zhaoliangjiadv2.mp4',
         // currentTime: 0,
-        imgWidth: 800,
+        imgWidth: 600,
         quality: 0.9,
         imageType: 'image/jpeg',
         isCheckImageColor: true, // 是否检查图片为纯色
     })
 
-    // 生成截图
-    cover.getVideoCover((res) => {
-        const img = document.getElementById('img')
-        const tips = document.getElementById('tips')
+    document.getElementById('start').addEventListener('click', () => {
+        // 生成截图
+        cover.getVideoCover((res) => {
+            const img = document.getElementById('img')
+            const tips = document.getElementById('tips')
 
-        img.setAttribute('src', res)
-        imageInfo = res
-        tips.innerText = '获取成功'
+            img.setAttribute('src', res)
+            imageInfo = res
+            tips.innerText = '获取成功'
+        })
     })
 
     // 获取下一秒视频截图

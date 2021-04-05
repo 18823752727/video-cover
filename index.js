@@ -25,12 +25,16 @@
         isCheckImageColor,
       } = config;
 
+      if (!url) {
+        console.warn('视频链接不能为空')
+      }
+
       this.url = url;
       this.video = null;
       this.videoWidth = 0;
-      this.imageType = imageType || image / png;
+      this.imageType = imageType || 'image/jpeg';
       this.quality = quality ? (quality > 0.2 ? quality : 0.2) : 0.95; // 不要用1，会额外增大base64大小。
-      this.imgWidth = imgWidth;
+      this.imgWidth = imgWidth || 800;
       this.currentTime = currentTime < 1 ? 1 : currentTime; // 默认设置1S
       this.isCheckImageColor = isCheckImageColor;
       this.duration = 0; // 视频时长
@@ -46,7 +50,7 @@
       const video = this.video || document.createElement("video");
       const currentTime = self.currentTime;
       video.src = self.url;
-      video.style.cssText = `position: fixedx; top: -1x00%; width: 400px; visibility: h1idden;`;
+      video.style.cssText = `position: fixed; top: -100%; width: 400px; visibility: hidden;`;
       video.controls = "controls";
       // 此处是设置跨域，防止污染canvas画布
       video.crossOrigin = "Anonymous";
